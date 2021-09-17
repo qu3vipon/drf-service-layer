@@ -1,0 +1,146 @@
+# DRF-Service-Layer
+
+Simple package supports service-layered design for Django REST Framework.
+
+## Why service layer?
+
+Have you ever wondered where to put your business logic when you use Django & DRF? There are several solutions with
+their pros and cons. Let's check them one by one.
+
+1. Fat Model, Skinny Views <br>
+   This is one of the most popular ways to split business logic from views. To keep your views light, all the heavy
+   codes go into "fat" models. But the problem is that as your project gets bigger, there are too many codes in your
+   models. Besides, there are some cases when your business logic doesn't require any database access. They just exist
+   in models because there aren't any places to be.
+
+
+2. QuerySet/Managers <br>
+   It might be preferable to move your business logic from models to QuerySet or Managers. But still, this solution is
+   not a good choice like the Fat Model approach if your business logic doesn't require any database access.
+
+
+3. Forms or Serializers <br>
+   Probably the worst option. They each have their own purpose. Please don't do this.
+
+
+4. Fat Views <br>
+   If all of your business logic stays in views, you'll have trouble understanding the flow of your views in a very
+   short period of time. And if you inherit one of your fat views, the parent view and the child view are too strongly
+   coupled. So you'll have a hard time extracting the legacy apis from your project.
+
+
+5. Service layer <br>
+   Split your business logic into functions and put them in a separate layer ties models and views. To manage functions
+   efficiently and improve the cohesion of codes, combine them into classes. In this way, views become easier to read
+   and business logic becomes much more maintainable. Even though this may not be a standard design pattern from Django
+   convention, some big companies
+   like [Doordash](https://doordash.engineering/2017/05/15/tips-for-building-high-quality-django-apps-at-scale/) are
+   already using this pattern by implementing it on their own.
+
+## How to use DRF-Service-Layer
+
+### Steps
+If you don't need to use any data when implementing business logic, skip step 1&2.
+
+
+1. Decide a type of DTO.
+   > What is DTO? <br> [DTO(Data Transfer Object)](https://en.wikipedia.org/wiki/Data_transfer_object) is an object that carries data between processes. <br> In DRF-Service-Layer, DTO is an object used for transferring data necessary for your business logic.
+
+   DTO works between views and the service layer. If you want to transfer any data from a view to a service, implement
+   create_dto() in your view that inherits GenericAPIView from DRF-Service-Layer. We'll cover this shortly.
+
+    - DTO as dataclass
+      ```python
+      # services.py
+      from dataclasses import dataclass
+      from typing import Union
+      
+      
+      @dataclass
+      class OrderDTO:
+          user_id: int
+          sort: Union[str, None]
+          is_paid: bool
+      ```
+
+    - DTO as dictionary
+    - DTO as list
+    - or any type you want...
+   
+
+2. Implement create_dto() in views.
+
+   If you decide to use dataclass as DTO:
+   ```python
+   # views.py
+   from service_layer.views import GenericServiceAPIView
+   
+   
+   class OrderAPIView(GenericServiceAPIView):
+       # ...
+
+       def create_dto(self, request) -> OrderDTO:
+           order_id = self.kwargs['order_id']
+           order = get_object_or_404(Order, pk=order_id)
+            
+           return OrderDTO(
+               user_id = self.request.user.id,
+               sort = self.request.query_params.get("sort"),
+               is_paid = order.is_paid
+           )   
+   ```
+
+3. Create a service class and implement business logic in it.
+   ```python
+   # services.py
+   from service_layer.services import Service
+   
+   
+   class OrderService(Service):
+       
+       def any_business_function(self):
+           user_id = self.dto.user_id 
+           sort = self.dto.sort
+           is_paid = self.dto.is_paid
+           # business logic goes here. 
+   ```
+
+4. Specify a service class you have implemented as service_class.
+   ```python
+   # views.py
+   
+   class OrderAPIView(GenericServiceAPIView):
+       service_class = OrderService  # new
+
+       def create_dto(self, request) -> OrderDTO:
+           # ...
+   ```
+
+5. Use service layer in a view.
+   ```python
+   # views.py
+      
+   class OrderAPIView(GenericServiceAPIView):
+       service_class = OrderService
+   
+       def create_dto(self, request) -> OrderDTO:
+           # ...
+   
+       def get(self, request, *args, **kwargs):  # new
+           # ...
+           self.service.any_business_function()
+           # ...
+           return Response(...)
+   ```
+
+### Description
+
+When a view is initialized by DRF's initial() method, create_dto() that you have implemented is called. The return value
+of create_dto() is set to `self.dto` and used as an argument when instantiating the service layer. DTO is already
+injected into the service layer as an instance variable(`self.dto`), you don't need to care about parameters when
+implementing business logic. After all, you can call any function from the service layer using `self.service` in your
+views.
+
+## Inspired by
+
+- [How to implement a service layer in Django + Rest Framework](https://breadcrumbscollector.tech/how-to-implement-a-service-layer-in-django-rest-framework/)
