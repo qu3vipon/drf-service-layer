@@ -7,7 +7,7 @@ Simple package supports service-layered design for Django REST Framework.
 Have you ever wondered where to put your business logic when you use Django & DRF? There are several solutions with
 their pros and cons. Let's check them one by one.
 
-1. Fat Model, Skinny Views <br>
+1. Fat Models, Skinny Views <br>
    This is one of the most popular ways to split business logic from views. To keep your views light, all the heavy
    codes go into "fat" models. But the problem is that as your project gets bigger, there are too many codes in your
    models. Besides, there are some cases when your business logic doesn't require any database access. They just exist
@@ -47,7 +47,7 @@ If you don't need to use any data when implementing business logic, skip step 1&
    > What is DTO? <br> [DTO(Data Transfer Object)](https://en.wikipedia.org/wiki/Data_transfer_object) is an object that carries data between processes. <br> In DRF-Service-Layer, DTO is an object used for transferring data necessary for your business logic.
 
    DTO works between views and the service layer. If you want to transfer any data from a view to a service, implement
-   create_dto() in your view that inherits GenericAPIView from DRF-Service-Layer. We'll cover this shortly.
+   `create_dto()` in your view that inherits GenericAPIView from DRF-Service-Layer. We'll cover this shortly.
 
     - DTO as dataclass
       ```python
@@ -68,7 +68,7 @@ If you don't need to use any data when implementing business logic, skip step 1&
     - or any type you want...
    
 
-2. Implement create_dto() in views.
+2. Implement `create_dto()` in views.
 
    If you decide to use dataclass as DTO:
    ```python
@@ -105,7 +105,7 @@ If you don't need to use any data when implementing business logic, skip step 1&
            # business logic goes here. 
    ```
 
-4. Specify a service class you have implemented as service_class.
+4. Specify a service class into a view as `service_class`.
    ```python
    # views.py
    
@@ -135,8 +135,8 @@ If you don't need to use any data when implementing business logic, skip step 1&
 
 ### Description
 
-When a view is initialized by DRF's initial() method, create_dto() that you have implemented is called. The return value
-of create_dto() is set to `self.dto` and used as an argument when instantiating the service layer. DTO is already
+When a view is initialized by DRF's `initial()` method, `create_dto()` that you have implemented is called. The return value
+of `create_dto()` is set to `self.dto` and used as an argument when instantiating the service layer. DTO is already
 injected into the service layer as an instance variable(`self.dto`), you don't need to care about parameters when
 implementing business logic. After all, you can call any function from the service layer using `self.service` in your
 views.
