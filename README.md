@@ -99,7 +99,7 @@ their pros and cons. Let's check them one by one.
            )   
    ```
 
-4. Create a service class and implement business logic in it.
+4. Create a service class and implement business logic as an instance function.
 
    ```python
    # services.py
