@@ -56,7 +56,6 @@ If you don't need to use any data when implementing business logic, skip step 1&
     - DTO as dataclass
       ```python
       # services.py
-      
       from dataclasses import dataclass
       from typing import Union
       
@@ -78,7 +77,6 @@ If you don't need to use any data when implementing business logic, skip step 1&
    If you decide to use dataclass as DTO:
    ```python
    # views.py
-   
    from service_layer.views import GenericServiceAPIView
    
    
@@ -98,7 +96,6 @@ If you don't need to use any data when implementing business logic, skip step 1&
 3. Create a service class and implement business logic in it.
    ```python
    # services.py
-   
    from service_layer.services import Service
    
    
@@ -114,7 +111,6 @@ If you don't need to use any data when implementing business logic, skip step 1&
 4. Specify a service class into a view as `service_class`.
    ```python
    # views.py
-   
    class OrderAPIView(GenericServiceAPIView):
        service_class = OrderService  # new
 
@@ -125,7 +121,6 @@ If you don't need to use any data when implementing business logic, skip step 1&
 5. Use service layer in a view.
    ```python
    # views.py
-      
    class OrderAPIView(GenericServiceAPIView):
        service_class = OrderService
    
