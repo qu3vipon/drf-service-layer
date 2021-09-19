@@ -32,7 +32,7 @@ their pros and cons. Let's check them one by one.
 
 
 5. Service layer <br>
-   Split your business logic into functions and put them in a separate layer ties models and views. To manage functions
+   Split your business logic into functions and put them in a separate layer which ties models and views. To manage functions
    efficiently and improve the cohesion of codes, combine them into classes. In this way, views become easier to read
    and business logic becomes much more maintainable. Even though this may not be a standard design pattern from Django
    convention, some big companies
