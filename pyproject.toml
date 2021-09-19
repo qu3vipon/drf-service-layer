@@ -2,13 +2,12 @@
 requires = ["flit"]
 build-backend = "flit_core.buildapi"
 
-[tool.flit.metadata]
+[project]
 name = "drf-service-layer"
-module = "drf_service_layer"
-author = "qu3vipon"
-author-email = "qu3vipon@gmail.com"
-home-page = "https://github.com/qu3vipon/drf-service-layer"
-keywords = "django, drf, service, layer, service-layer"
+authors = [
+    { name = "qu3vipon", email = "qu3vipon@gmail.com" },
+]
+reademe = "README.md"
 classifiers = [
     "Intended Audience :: Developers",
     "Operating System :: OS Independent",
@@ -25,17 +24,18 @@ classifiers = [
     "Topic :: Internet :: WWW/HTTP :: HTTP Servers",
     "Topic :: Internet :: WWW/HTTP",
 ]
-requires = [
+requires-python = ">=3.7"
+keywords = ["django", "drf", "service", "layer", "service-layer"]
+dependencies = [
     'django',
     'djangorestframework',
 ]
-description-file = "README.md"
-requires-python = ">=3.7"
 
-[tool.flit.metadata.urls]
+[project.urls]
 Documentation = "https://github.com/qu3vipon/drf-service-layer"
+Source = "https://github.com/qu3vipon/drf-service-layer"
 
-[tool.flit.metadata.requires-extra]
+[project.optional-dependencies]
 dev = [
     "pytest >=6.2.4,<7.0.0",
     "pytest-cov >=2.12.0,<3.0.0",
