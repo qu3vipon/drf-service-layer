@@ -40,8 +40,8 @@ their pros and cons. Let's check them one by one.
 ## How to use DRF-Service-Layer
 
 ### Steps
-If you don't need to use any data when implementing business logic, skip step 1&2.
 
+If you don't need to use any data when implementing business logic, skip step 1&2.
 
 1. Decide a type of DTO.
    > What is DTO? <br> [DTO(Data Transfer Object)](https://en.wikipedia.org/wiki/Data_transfer_object) is an object that carries data between processes. <br> In DRF-Service-Layer, DTO is an object used for transferring data necessary for your business logic.
@@ -66,7 +66,7 @@ If you don't need to use any data when implementing business logic, skip step 1&
     - DTO as dictionary
     - DTO as list
     - or any type you want...
-   
+
 
 2. Implement `create_dto()` in views.
 
@@ -77,7 +77,6 @@ If you don't need to use any data when implementing business logic, skip step 1&
    
    
    class OrderAPIView(GenericServiceAPIView):
-       # ...
 
        def create_dto(self, request) -> OrderDTO:
            order_id = self.kwargs['order_id']
@@ -135,11 +134,11 @@ If you don't need to use any data when implementing business logic, skip step 1&
 
 ### Description
 
-When a view is initialized by DRF's `initial()` method, `create_dto()` that you have implemented is called. The return value
+When a view is initialized by DRF's `initial()` method, `create_dto()` you have implemented is called. The return value
 of `create_dto()` is set to `self.dto` and used as an argument when instantiating the service layer. DTO is already
-injected into the service layer as an instance variable(`self.dto`), you don't need to care about parameters when
-implementing business logic. After all, you can call any function from the service layer using `self.service` in your
-views.
+injected into the service layer as an instance variable(`self.dto`), so you don't need to care about parameters when
+implementing business logic and using them. After all, you can call any function from the service layer
+using `self.service` in your views.
 
 ## Inspired by
 
