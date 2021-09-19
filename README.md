@@ -2,6 +2,8 @@
 
 Simple package supports service-layered design for Django REST Framework.
 
+<br>
+
 ## Why service layer?
 
 Have you ever wondered where to put your business logic when you use Django & DRF? There are several solutions with
@@ -37,6 +39,8 @@ their pros and cons. Let's check them one by one.
    like [Doordash](https://doordash.engineering/2017/05/15/tips-for-building-high-quality-django-apps-at-scale/) are
    already using this pattern by implementing it on their own.
 
+<br>
+
 ## How to use DRF-Service-Layer
 
 ### Steps
@@ -52,6 +56,7 @@ If you don't need to use any data when implementing business logic, skip step 1&
     - DTO as dataclass
       ```python
       # services.py
+      
       from dataclasses import dataclass
       from typing import Union
       
@@ -73,6 +78,7 @@ If you don't need to use any data when implementing business logic, skip step 1&
    If you decide to use dataclass as DTO:
    ```python
    # views.py
+   
    from service_layer.views import GenericServiceAPIView
    
    
@@ -92,6 +98,7 @@ If you don't need to use any data when implementing business logic, skip step 1&
 3. Create a service class and implement business logic in it.
    ```python
    # services.py
+   
    from service_layer.services import Service
    
    
@@ -139,6 +146,8 @@ of `create_dto()` is set to `self.dto` and used as an argument when instantiatin
 injected into the service layer as an instance variable(`self.dto`), so you don't need to care about parameters when
 implementing business logic and using them. After all, you can call any function from the service layer
 using `self.service` in your views.
+
+<br>
 
 ## Inspired by
 
