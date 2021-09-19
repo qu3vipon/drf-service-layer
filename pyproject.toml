@@ -30,6 +30,7 @@ dependencies = [
     'django',
     'djangorestframework',
 ]
+dynamic = ['version', 'description']
 
 [project.urls]
 Documentation = "https://github.com/qu3vipon/drf-service-layer"
@@ -43,3 +44,6 @@ dev = [
     "black ==20.8b1",
     "isort >=5.0.6,<6.0.0",
 ]
+
+[tool.flit.module]
+name = "drf_service_layer"
