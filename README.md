@@ -45,94 +45,105 @@ their pros and cons. Let's check them one by one.
 
 ### Steps
 
-If you don't need to use any data when implementing business logic, skip step 1&2.
+1. install package
 
-1. Decide a type of DTO.
-   > What is DTO? <br> [DTO(Data Transfer Object)](https://en.wikipedia.org/wiki/Data_transfer_object) is an object that carries data between processes. <br> In DRF-Service-Layer, DTO is an object used for transferring data necessary for your business logic.
+```python
+pip install drf-service-layer
+```
 
-   DTO works between views and the service layer. If you want to transfer any data from a view to a service, implement
-   `create_dto()` in your view that inherits GenericAPIView from DRF-Service-Layer. We'll cover this shortly.
+**If you don't need to use any data when implementing business logic, skip step 1&2.**
 
-    - DTO as dataclass
-      ```python
-      # services.py
-      from dataclasses import dataclass
-      from typing import Union
-      
-      
-      @dataclass
-      class OrderDTO:
-          user_id: int
-          sort: Union[str, None]
-          is_paid: bool
-      ```
+2. Decide a type of DTO.
 
-    - DTO as dictionary
-    - DTO as list
-    - or any type you want...
+> What is DTO? <br> [DTO(Data Transfer Object)](https://en.wikipedia.org/wiki/Data_transfer_object) is an object that carries data between processes. <br> In DRF-Service-Layer, DTO is an object used for transferring data necessary for your business logic.
+
+DTO works between views and the service layer. If you want to transfer any data from a view to a service, implement
+`create_dto()` in your view that inherits GenericAPIView from DRF-Service-Layer. We'll cover this shortly.
+
+- DTO as dataclass
+  ```python
+  # services.py
+  from dataclasses import dataclass
+  from typing import Union
+  
+  
+  @dataclass
+  class OrderDTO:
+      user_id: int
+      sort: Union[str, None]
+      is_paid: bool
+  ```
+
+- DTO as dictionary
+- DTO as list
+- or any type you want...
 
 
-2. Implement `create_dto()` in views.
+3. Implement `create_dto()` in views.
 
-   If you decide to use dataclass as DTO:
-   ```python
-   # views.py
-   from service_layer.views import GenericServiceAPIView
-   
-   
-   class OrderAPIView(GenericServiceAPIView):
+If you decide to use dataclass as DTO:
 
-       def create_dto(self, request) -> OrderDTO:
-           order_id = self.kwargs['order_id']
-           order = get_object_or_404(Order, pk=order_id)
-            
-           return OrderDTO(
-               user_id = self.request.user.id,
-               sort = self.request.query_params.get("sort"),
-               is_paid = order.is_paid
-           )   
-   ```
+```python
+# views.py
+from service_layer.views import GenericServiceAPIView
 
-3. Create a service class and implement business logic in it.
-   ```python
-   # services.py
-   from service_layer.services import Service
-   
-   
-   class OrderService(Service):
-       
-       def any_business_function(self):
-           user_id = self.dto.user_id 
-           sort = self.dto.sort
-           is_paid = self.dto.is_paid
-           # business logic goes here. 
-   ```
 
-4. Specify a service class into a view as `service_class`.
-   ```python
-   # views.py
-   class OrderAPIView(GenericServiceAPIView):
-       service_class = OrderService  # new
+class OrderAPIView(GenericServiceAPIView):
 
-       def create_dto(self, request) -> OrderDTO:
-           # ...
-   ```
+    def create_dto(self, request) -> OrderDTO:
+        order_id = self.kwargs['order_id']
+        order = get_object_or_404(Order, pk=order_id)
 
-5. Use service layer in a view.
-   ```python
-   # views.py
-   class OrderAPIView(GenericServiceAPIView):
-       service_class = OrderService
-   
-       def create_dto(self, request) -> OrderDTO:
-           # ...
-   
-       def get(self, request, *args, **kwargs):  # new
-           # ...
-           self.service.any_business_function()
-           # ...
-           return Response(...)
-   ```
+        return OrderDTO(
+            user_id=self.request.user.id,
+            sort=self.request.query_params.get("sort"),
+            is_paid=order.is_paid
+        )   
+```
+
+4. Create a service class and implement business logic in it.
+
+```python
+# services.py
+from service_layer.services import Service
+
+
+class OrderService(Service):
+
+    def any_business_function(self):
+        user_id = self.dto.user_id
+        sort = self.dto.sort
+        is_paid = self.dto.is_paid
+        # business logic goes here. 
+```
+
+5. Specify a service class into a view as `service_class`.
+
+```python
+# views.py
+class OrderAPIView(GenericServiceAPIView):
+    service_class = OrderService  # new
+
+    def create_dto(self, request) -> OrderDTO:
+        # ...
+```
+
+6. Use service layer in a view.
+
+```python
+# views.py
+class OrderAPIView(GenericServiceAPIView):
+    service_class = OrderService
+
+    def create_dto(self, request) -> OrderDTO:
+        # ...
+
+    def get(self, request, *args, **kwargs):  # new
+        # ...
+        self.service.any_business_function()
+        # ...
+        return Response(...)
+```
 
 ### Description
 
