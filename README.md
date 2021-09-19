@@ -81,7 +81,7 @@ their pros and cons. Let's check them one by one.
    If you decide to use dataclass as DTO:
    ```python
    # views.py
-   from service_layer.views import GenericServiceAPIView
+   from drf_service_layer.views import GenericServiceAPIView
    
    
    class OrderAPIView(GenericServiceAPIView):
@@ -101,7 +101,7 @@ their pros and cons. Let's check them one by one.
 
    ```python
    # services.py
-   from service_layer.services import Service
+   from drf_service_layer.services import Service
    
    
    class OrderService(Service):
