@@ -45,7 +45,7 @@ their pros and cons. Let's check them one by one.
 
 ### Steps
 
-1. install package
+1. Install package
 
    ```python
    pip install drf-service-layer
