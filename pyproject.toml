@@ -3,6 +3,7 @@ requires = ["flit"]
 build-backend = "flit_core.buildapi"
 
 [tool.flit.metadata]
+name = "drf-service-layer"
 module = "drf_service_layer"
 author = "qu3vipon"
 author-email = "qu3vipon@gmail.com"
