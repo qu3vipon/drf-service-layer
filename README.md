@@ -57,6 +57,10 @@ their pros and cons. Let's check them one by one.
    
    DTO works between views and the service layer. If you want to transfer any data from a view to a service, implement
    `create_dto()` in your view that inherits GenericServiceAPIView from DRF-Service-Layer. We'll cover this shortly.
+
+   <br>   
+
+   Let's implement DTO. There are several container types you can use. If you want to validate your DTO before transfer, you can use 3rd party library like [Pydantic](https://pydantic-docs.helpmanual.io/).
    
    - DTO as dataclass
      ```python
