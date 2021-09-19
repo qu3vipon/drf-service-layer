@@ -56,7 +56,7 @@ their pros and cons. Let's check them one by one.
    > 💁 What is DTO? <br> [DTO(Data Transfer Object)](https://en.wikipedia.org/wiki/Data_transfer_object) is an object that carries data between processes. <br> In DRF-Service-Layer, DTO is an object used for transferring data necessary for your business logic.
    
    DTO works between views and the service layer. If you want to transfer any data from a view to a service, implement
-   `create_dto()` in your view that inherits GenericAPIView from DRF-Service-Layer. We'll cover this shortly.
+   `create_dto()` in your view that inherits GenericServiceAPIView from DRF-Service-Layer. We'll cover this shortly.
    
    - DTO as dataclass
      ```python
