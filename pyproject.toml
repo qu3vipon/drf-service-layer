@@ -1,0 +1,44 @@
+[build-system]
+requires = ["flit"]
+build-backend = "flit_core.buildapi"
+
+[tool.flit.metadata]
+module = "service_layer"
+author = "qu3vipon"
+author-email = "qu3vipon@gmail.com"
+home-page = "https://github.com/qu3vipon/drf-service-layer"
+keywords = "django, drf, service, layer, service-layer"
+classifiers = [
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Topic :: Internet",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Software Development",
+    "Typing :: Typed",
+    "Development Status :: 2 - Pre-Alpha",
+    "Environment :: Web Environment",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Internet :: WWW/HTTP :: HTTP Servers",
+    "Topic :: Internet :: WWW/HTTP",
+]
+requires = [
+    'django',
+    'djangorestframework',
+]
+description-file = "README.md"
+requires-python = ">=3.7"
+
+[tool.flit.metadata.urls]
+Documentation = "https://github.com/qu3vipon/drf-service-layer"
+
+[tool.flit.metadata.requires-extra]
+dev = [
+    "pytest >=6.2.4,<7.0.0",
+    "pytest-cov >=2.12.0,<3.0.0",
+    "flake8 >=3.8.3,<4.0.0",
+    "black ==20.8b1",
+    "isort >=5.0.6,<6.0.0",
+]
