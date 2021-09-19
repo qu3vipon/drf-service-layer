@@ -51,6 +51,8 @@ their pros and cons. Let's check them one by one.
 pip install drf-service-layer
 ```
 
+<br>
+
 **If you don't need to use any data when implementing business logic, skip step 1&2.**
 
 2. Decide a type of DTO.
@@ -78,6 +80,7 @@ DTO works between views and the service layer. If you want to transfer any data 
 - DTO as list
 - or any type you want...
 
+<br>
 
 3. Implement `create_dto()` in views.
 
@@ -101,6 +104,8 @@ class OrderAPIView(GenericServiceAPIView):
         )   
 ```
 
+<br>
+
 4. Create a service class and implement business logic in it.
 
 ```python
@@ -117,6 +122,8 @@ class OrderService(Service):
         # business logic goes here. 
 ```
 
+<br>
+
 5. Specify a service class into a view as `service_class`.
 
 ```python
@@ -127,6 +134,8 @@ class OrderAPIView(GenericServiceAPIView):
     def create_dto(self, request) -> OrderDTO:
         # ...
 ```
+
+<br>
 
 6. Use service layer in a view.
 
