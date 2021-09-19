@@ -7,7 +7,7 @@ name = "drf-service-layer"
 authors = [
     { name = "qu3vipon", email = "qu3vipon@gmail.com" },
 ]
-reademe = "README.md"
+readme = "README.md"
 classifiers = [
     "Intended Audience :: Developers",
     "Operating System :: OS Independent",
