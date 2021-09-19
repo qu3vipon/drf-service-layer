@@ -50,9 +50,7 @@ their pros and cons. Let's check them one by one.
    ```python
    pip install drf-service-layer
    ```
-
-
-> 💡If you don't need to use any data when implementing business logic, skip step 1&2.
+   >💡 If you don't need to use any data when implementing business logic, skip step 2&3.
 2. Decide a type of DTO.
 
    > 💁 What is DTO? <br> [DTO(Data Transfer Object)](https://en.wikipedia.org/wiki/Data_transfer_object) is an object that carries data between processes. <br> In DRF-Service-Layer, DTO is an object used for transferring data necessary for your business logic.
