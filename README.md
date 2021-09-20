@@ -11,9 +11,9 @@ their pros and cons. Let's check them one by one.
 
 1. Fat Models, Skinny Views <br>
    This is one of the most popular ways to split business logic from views. To keep your views light, all the heavy
-   codes go into "fat" models. But the problem is that as your project gets bigger, there are too many codes in your
-   models. Besides, there are some cases when your business logic doesn't require any database access. They just exist
-   in models because there aren't any places to be.
+   codes go into "fat" models. The problem is that as your project gets bigger, there are too many codes in your models 
+   and models get too many responsibilities. Besides, there are some cases when your business logic doesn't require any 
+   database access. There is no reason for them to be in models, which is not quite reasonable.
 
 
 2. QuerySet/Managers <br>
