@@ -17,8 +17,8 @@ their pros and cons. Let's check them one by one.
 
 
 2. QuerySet/Managers <br>
-   It might be preferable to move your business logic from models to QuerySet or Managers. But still, this solution is
-   not a good choice like the Fat Model approach if your business logic doesn't require any database access.
+   It might be preferable to move your business logic from models to queryset or managers. But still, this solution is
+   not a good choice like the "Fat Models approach" if your business logic doesn't need to communicate with databases.
 
 
 3. Forms or Serializers <br>
@@ -28,7 +28,7 @@ their pros and cons. Let's check them one by one.
 4. Fat Views <br>
    If all of your business logic stays in views, you'll have trouble understanding the flow of your views in a very
    short period of time. And if you inherit one of your fat views, the parent view and the child view are too strongly
-   coupled. So you'll have a hard time extracting the legacy apis from your project.
+   coupled. So you'll have a hard time when you want to extract the legacy apis from your project.
 
 
 5. Service layer <br>
