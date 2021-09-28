@@ -1,39 +1,27 @@
-from typing import Any
-
 from rest_framework import generics, mixins
 
 
 class GenericServiceAPIView(generics.GenericAPIView):
-    """
-    Service-layered GenericAPIView.
-    """
-
     service_class = None
     service = None
     dto = None
 
     def initial(self, request, *args, **kwargs):
         super().initial(request, *args, **kwargs)
-        self.connect_service(request)
+        self.attach_service()
 
-    def connect_service(self, request):
-        """
-        Instantiate `self.service` using `self.service_class` and `self.dto`
-        """
-
+    def attach_service(self, *args, **kwargs):
         assert self.service_class is not None, (
-            "'%s' should provide a `service_class` attribute."
+            "'%s' should either include a `service_class` attribute."
             % self.__class__.__name__
         )
 
-        self.dto = self.create_dto(request)
-        self.service = self.service_class(self.dto)
+        try:
+            dto = getattr(self, "dto")
+        except AttributeError:
+            dto = None
 
-    def create_dto(self, request) -> Any:  # noqa
-        """
-        DTO(Data transfer object) can be any type you want to use for service.
-        """
-        return None
+        self.service = self.service_class(dto)
 
 
 class CreateAPIView(mixins.CreateModelMixin,
