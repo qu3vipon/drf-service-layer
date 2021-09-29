@@ -1,10 +1,4 @@
-from dataclasses import dataclass
-from typing import Any, Optional
-
-from django.contrib.auth import get_user_model
-from rest_framework.serializers import Serializer
-
-User = get_user_model()
+from typing import Any
 
 
 class Service:
@@ -13,15 +7,9 @@ class Service:
         self.dto = dto
 
 
-@dataclass
-class SerializerDTO:
-    serializer: Serializer
-    user: Optional[User] = None
-
-
-def service_layer(service_class, to: str = "serializer"):
+def service_layer():
     """
-    add service layer to any Class(e.g. View, Serializer, ...)
+    add service layer to Serializer
     """
 
     def wrapper(cls):
@@ -30,19 +18,12 @@ def service_layer(service_class, to: str = "serializer"):
         def __init__(self, *args, **kwargs):
             original_init(self, *args, **kwargs)
 
-            try:
-                dto = getattr(self, "dto")
-            except AttributeError:
-                dto = None
+            assert self.context.get("service") is not None, (
+                "'%s' should retrieve service context from view."
+                % self.__class__.__name__
+            )
 
-                # build default dto when decorating serializer
-                if to.lower() == "serializer":
-                    dto = SerializerDTO(
-                        serializer=self,
-                        user=getattr(self.context["request"], "user", None)
-                    )
-
-            self.service = service_class(dto)
+            self.service = self.context["service"]
 
         cls.__init__ = __init__
         return cls

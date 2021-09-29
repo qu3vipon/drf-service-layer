@@ -162,10 +162,19 @@ function from the service layer using `self.service` in your views.
 Under Experiment...
 
 ```python
-@service_layer(OrderService)
+@service_layer()
 class FooSerializer(serializers.ModelSerializer):
     # ...
+
+    def foo(self, obj):
+        # ...
+        return self.service.any_business_function()
 ```
+
+### Description
+
+If you add `@service_layer()` decorator to your serializer, you can access the service layer through `self.serivce`.
+And the decorator explicitly notifies you that the serializer is connected to the service layer.
 
 ## Inspired by
 

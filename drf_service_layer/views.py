@@ -23,6 +23,17 @@ class GenericServiceAPIView(generics.GenericAPIView):
 
         self.service = self.service_class(dto)
 
+    def get_serializer_context(self):
+        """
+        Extra context provided to the serializer class.
+        """
+        return {
+            'request': self.request,
+            'format': self.format_kwarg,
+            'view': self,
+            'service': self.service,
+        }
+
 
 class CreateAPIView(mixins.CreateModelMixin,
                     GenericServiceAPIView):
