@@ -112,6 +112,7 @@ their pros and cons. Let's check them one by one.
    class OrderService(Service):
    
        def any_business_function(self):
+           self.dto: OrderDTO
            user_id = self.dto.user_id
            sort = self.dto.sort
            is_paid = self.dto.is_paid

@@ -11,7 +11,7 @@ class Service:
         self.dto = dto
 
 
-def service_layer(service_class):
+def service_layer(service_class, dto=None):
     """
     add service layer to Serializer
     """
@@ -23,15 +23,18 @@ def service_layer(service_class):
             original_init(self, *args, **kwargs)
 
             assert self.context.get("service") is not None, (
-                "'%s' should retrieve service context from view."
-                % self.__class__.__name__
+                f"{self.__class__.__name__} should retrieve service context from view."
             )
 
             service = self.context["service"]
             assert isinstance(service, service_class), (
-                "Injected service from view and declared service from decorator are not matched in '%s'."
-                % self.__class__.__name__
+                f"{self.__class__.__name__}: The service injected from view and the service declared in the decorator are not the same."
             )
+
+            if dto:
+                assert isinstance(service.dto, dto), (
+                    f"{self.__class__.__name__}: The dto injected from view and the dto declared in the decorator are not the same."
+                )
 
             setattr(self, "service", service)
 
