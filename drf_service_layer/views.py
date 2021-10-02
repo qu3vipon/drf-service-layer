@@ -28,15 +28,14 @@ class GenericServiceAPIView(generics.GenericAPIView):
         Extra context provided to the serializer class.
         """
         return {
-            'request': self.request,
-            'format': self.format_kwarg,
-            'view': self,
-            'service': self.service,
+            "request": self.request,
+            "format": self.format_kwarg,
+            "view": self,
+            "service": self.service,
         }
 
 
-class CreateAPIView(mixins.CreateModelMixin,
-                    GenericServiceAPIView):
+class CreateAPIView(mixins.CreateModelMixin, GenericServiceAPIView):
     """
     Service-layered view for creating a model instance.
     """
@@ -45,8 +44,7 @@ class CreateAPIView(mixins.CreateModelMixin,
         return self.create(request, *args, **kwargs)
 
 
-class ListAPIView(mixins.ListModelMixin,
-                  GenericServiceAPIView):
+class ListAPIView(mixins.ListModelMixin, GenericServiceAPIView):
     """
     Service-layered view for listing a queryset.
     """
@@ -55,8 +53,7 @@ class ListAPIView(mixins.ListModelMixin,
         return self.list(request, *args, **kwargs)
 
 
-class RetrieveAPIView(mixins.RetrieveModelMixin,
-                      GenericServiceAPIView):
+class RetrieveAPIView(mixins.RetrieveModelMixin, GenericServiceAPIView):
     """
     Service-layered view for retrieving a model instance.
     """
@@ -65,8 +62,7 @@ class RetrieveAPIView(mixins.RetrieveModelMixin,
         return self.retrieve(request, *args, **kwargs)
 
 
-class DestroyAPIView(mixins.DestroyModelMixin,
-                     GenericServiceAPIView):
+class DestroyAPIView(mixins.DestroyModelMixin, GenericServiceAPIView):
     """
     Service-layered view for deleting a model instance.
     """
@@ -75,8 +71,7 @@ class DestroyAPIView(mixins.DestroyModelMixin,
         return self.destroy(request, *args, **kwargs)
 
 
-class UpdateAPIView(mixins.UpdateModelMixin,
-                    GenericServiceAPIView):
+class UpdateAPIView(mixins.UpdateModelMixin, GenericServiceAPIView):
     """
     Service-layered view for updating a model instance.
     """
@@ -88,9 +83,9 @@ class UpdateAPIView(mixins.UpdateModelMixin,
         return self.partial_update(request, *args, **kwargs)
 
 
-class ListCreateAPIView(mixins.ListModelMixin,
-                        mixins.CreateModelMixin,
-                        GenericServiceAPIView):
+class ListCreateAPIView(
+    mixins.ListModelMixin, mixins.CreateModelMixin, GenericServiceAPIView
+):
     """
     Service-layered view for listing a queryset or creating a model instance.
     """
@@ -102,9 +97,9 @@ class ListCreateAPIView(mixins.ListModelMixin,
         return self.create(request, *args, **kwargs)
 
 
-class RetrieveUpdateAPIView(mixins.RetrieveModelMixin,
-                            mixins.UpdateModelMixin,
-                            GenericServiceAPIView):
+class RetrieveUpdateAPIView(
+    mixins.RetrieveModelMixin, mixins.UpdateModelMixin, GenericServiceAPIView
+):
     """
     Service-layered view for retrieving, updating a model instance.
     """
@@ -119,9 +114,9 @@ class RetrieveUpdateAPIView(mixins.RetrieveModelMixin,
         return self.partial_update(request, *args, **kwargs)
 
 
-class RetrieveDestroyAPIView(mixins.RetrieveModelMixin,
-                             mixins.DestroyModelMixin,
-                             GenericServiceAPIView):
+class RetrieveDestroyAPIView(
+    mixins.RetrieveModelMixin, mixins.DestroyModelMixin, GenericServiceAPIView
+):
     """
     Service-layered view for retrieving or deleting a model instance.
     """
@@ -133,10 +128,12 @@ class RetrieveDestroyAPIView(mixins.RetrieveModelMixin,
         return self.destroy(request, *args, **kwargs)
 
 
-class RetrieveUpdateDestroyAPIView(mixins.RetrieveModelMixin,
-                                   mixins.UpdateModelMixin,
-                                   mixins.DestroyModelMixin,
-                                   GenericServiceAPIView):
+class RetrieveUpdateDestroyAPIView(
+    mixins.RetrieveModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.DestroyModelMixin,
+    GenericServiceAPIView,
+):
     """
     Service-layered view for retrieving, updating or deleting a model instance.
     """
