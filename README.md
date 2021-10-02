@@ -11,8 +11,8 @@ their pros and cons. Let's check them one by one.
 
 1. Fat Models, Skinny Views <br>
    This is one of the most popular ways to split business logic from views. To keep your views light, all the heavy
-   codes go into "fat" models. The problem is that as your project gets bigger, there are too many codes in your models
-   and models get too many responsibilities. Besides, there are some cases when your business logic doesn't require any
+   codes go into "fat" models. The problem is that as your project gets bigger, there are too many codes in your models 
+   and they get too many responsibilities. Besides, there are some cases when your business logic doesn't require any
    database access. There is no reason for them to be in models, which is not quite reasonable.
 
 
@@ -50,7 +50,7 @@ their pros and cons. Let's check them one by one.
    ```python
    pip install drf-service-layer
    ```
-   > 💡 If you don't need to use any data when implementing business logic, skip step 2&3.
+   > 💡 If you don't need any data when implementing business logic, skip step 2&3.
 2. Decide a type of DTO.
 
    > 💁 What is DTO? <br> [DTO(Data Transfer Object)](https://en.wikipedia.org/wiki/Data_transfer_object) is an object that carries data between processes. <br> In DRF-Service-Layer, DTO is an object used for transferring data necessary for your business logic.
@@ -59,20 +59,20 @@ their pros and cons. Let's check them one by one.
    `@property dto` in your view that inherits GenericServiceAPIView from DRF-Service-Layer. We'll cover this
    shortly. <br>
 
-   Let's implement DTO. There are several container types you can use. If you want to validate your DTO before transfer,
+   Let's implement DTO. There are several container types you can choose. If you want to validate your DTO before transfer,
    you can use 3rd party library like [Pydantic](https://pydantic-docs.helpmanual.io/).
 
     - DTO as dataclass
       ```python
       # services.py
       from dataclasses import dataclass
-      from typing import Union
+      from typing import Optional
       
       
       @dataclass
       class OrderDTO:
           user_id: int
-          sort: Union[str, None]
+          sort: Optional[str] = None
           is_paid: bool
       ```
 
@@ -153,7 +153,7 @@ their pros and cons. Let's check them one by one.
 When a view is initialized by DRF's `initial()` method, `dto` property you have implemented is used as an argument when
 instantiating the service layer. DTO is already injected into the service layer as an instance variable(`self.dto`), so
 you don't need to care about parameters when implementing business logic and using them. After all, you can call any
-function from the service layer using `self.service` in your views.
+method from the service layer using `self.service` in your views.
 
 <br>
 
@@ -177,7 +177,7 @@ class FooSerializer(serializers.ModelSerializer):
 ### Description
 
 If you add `@service_layer` decorator to your serializer, you can access the service layer through `self.serivce`.
-And the decorator explicitly notifies you that the serializer is connected to the service layer.
+The decorator explicitly notifies you that the serializer is connected to the service layer.
 
 ## Inspired by
 
