@@ -165,7 +165,7 @@ Under Experiment...
 from drf_service_layer.services import service_layer
 
 
-@service_layer
+@service_layer(FooService)
 class FooSerializer(serializers.ModelSerializer):
     # ...
 
@@ -176,7 +176,7 @@ class FooSerializer(serializers.ModelSerializer):
 
 ### Description
 
-If you add `@service_layer` decorator to your serializer, you can access the service layer through `self.serivce`.
+If you add `@service_layer()` decorator to your serializer, you can access the service layer through `self.serivce`.
 The decorator explicitly notifies you that the serializer is connected to the service layer.
 
 ## Inspired by
