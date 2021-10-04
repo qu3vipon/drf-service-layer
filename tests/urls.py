@@ -20,5 +20,19 @@ from tests.test_app import views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("products/", views.ProductListView.as_view(), name="product_list"),
+    path(
+        "original/products/<int:pk>/",
+        views.DRFProductRetrieveView.as_view(),
+        name="product_retrieve_original",
+    ),
+    path(
+        "service/products/<int:pk>/",
+        views.ProductRetrieveView.as_view(),
+        name="product_retrieve_service",
+    ),
+    path(
+        "errors/products/<int:pk>/",
+        views.ErrorCaseView.as_view(),
+        name="product_retrieve_errors",
+    ),
 ]

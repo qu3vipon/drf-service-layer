@@ -72,8 +72,8 @@ their pros and cons. Let's check them one by one.
       @dataclass
       class OrderDTO:
           user_id: int
+          order_id: int
           sort: Optional[str] = None
-          is_paid: bool
       ```
 
     - DTO as dictionary
@@ -92,13 +92,10 @@ their pros and cons. Let's check them one by one.
    
        @property
        def dto(self) -> OrderDTO:
-           order_id = self.kwargs['order_id']
-           order = get_object_or_404(Order, pk=order_id)
-   
            return OrderDTO(
                user_id=self.request.user.id,
+               order_id=self.kwargs['order_id'],
                sort=self.request.query_params.get("sort"),
-               is_paid=order.is_paid
            )   
    ```
 
@@ -113,9 +110,11 @@ their pros and cons. Let's check them one by one.
    
        def any_business_function(self):
            self.dto: OrderDTO
+   
            user_id = self.dto.user_id
+           order_id = self.dto.order_id
            sort = self.dto.sort
-           is_paid = self.dto.is_paid
+   
            # business logic goes here. 
    ```
 
@@ -160,13 +159,11 @@ method from the service layer using `self.service` in your views.
 
 ## How to use DRF-Service-Layer in Serializer
 
-Under Experiment...
-
 ```python
 from drf_service_layer.services import service_layer
 
 
-@service_layer(FooService)
+@service_layer(FooService, FooDTO)
 class FooSerializer(serializers.ModelSerializer):
     # ...
 

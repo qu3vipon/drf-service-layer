@@ -4,6 +4,7 @@ from rest_framework import generics, mixins
 class GenericServiceAPIView(generics.GenericAPIView):
     service_class = None
     service = None
+    pre_service = None
     dto = None
 
     def initial(self, request, *args, **kwargs):
@@ -15,6 +16,8 @@ class GenericServiceAPIView(generics.GenericAPIView):
             "'%s' should either include a `service_class` attribute."
             % self.__class__.__name__
         )
+
+        self.pre_service = self.service_class(None)
 
         try:
             dto = getattr(self, "dto")
