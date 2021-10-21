@@ -44,19 +44,16 @@ their pros and cons. Let's check them one by one.
 ## How to use DRF-Service-Layer in View
 
 ### Steps
-
 1. Install package
-
    ```python
    pip install drf-service-layer
    ```
-   > 💡 If you don't need any data when implementing business logic, skip step 2&3.
 2. Decide a type of DTO.
 
    > 💁 What is DTO? <br> [DTO(Data Transfer Object)](https://en.wikipedia.org/wiki/Data_transfer_object) is an object that carries data between processes. <br> In DRF-Service-Layer, DTO is an object used for transferring data necessary for your business logic.
 
    DTO works between views and the service layer. If you want to transfer any data from a view to a service, implement
-   `@property dto` in your view that inherits GenericServiceAPIView from DRF-Service-Layer. We'll cover this
+   `dto property` in your view that inherits GenericServiceAPIView from DRF-Service-Layer. We'll cover this
    shortly. <br>
 
    Let's implement DTO. There are several container types you can choose. If you want to validate your DTO before transfer,
@@ -80,7 +77,7 @@ their pros and cons. Let's check them one by one.
     - DTO as list
     - or any type you want...
 
-3. Implement `@property dto` in views.
+3. Implement `dto property` in views.
 
    If you decide to use dataclass as DTO:
    ```python
@@ -99,7 +96,7 @@ their pros and cons. Let's check them one by one.
            )   
    ```
 
-4. Create a service class and implement business logic as an instance function.
+4. Create a service class and implement business logic as an instance method.
 
    ```python
    # services.py
@@ -108,7 +105,7 @@ their pros and cons. Let's check them one by one.
    
    class OrderService(Service):
    
-       def any_business_function(self):
+       def any_business_method(self):
            self.dto: OrderDTO
    
            user_id = self.dto.user_id
@@ -143,17 +140,18 @@ their pros and cons. Let's check them one by one.
    
        def get(self, request, *args, **kwargs):  # new
            # ...
-           self.service.any_business_function()
+           self.service.any_business_method()
            # ...
            return Response(...)
    ```
 
 ### Description
 
-When a view is initialized by DRF's `initial()` method, `dto` property you have implemented is used as an argument when
-instantiating the service layer. DTO is already injected into the service layer as an instance variable(`self.dto`), so
-you don't need to care about parameters when implementing business logic and using them. After all, you can call any
-method from the service layer using `self.service` in your views.
+When a view is initialized by DRF's `initial()` method, `dto property` is used as an argument when instantiating 
+the service layer. DTO is already injected into the service layer as an instance variable(`self.dto`), so you don't 
+need to care about parameters when implementing business logic and using them. You can get editor support from type 
+hinting(`self.dto: OrderDTO`) when you deal with `self.dto`. After all, you can call any method from the service layer 
+using `self.service` in your views.
 
 <br>
 
