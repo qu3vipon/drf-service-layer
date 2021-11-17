@@ -11,9 +11,10 @@ their pros and cons. Let's check them one by one.
 
 1. Fat Models, Skinny Views <br>
    This is one of the most popular ways to split business logic from views. To keep your views light, all the heavy
-   codes go into "fat" models. The problem is that as your project gets bigger, there are too many codes in your models 
-   and they get too many responsibilities. Besides, there are some cases when your business logic doesn't require any
-   database access. There is no reason for them to be in models, which is not quite reasonable.
+   codes go into "fat" models. The problem is that, as your project gets bigger, models become fatter and have too many
+   responsibilities. They become "god" models over "fat" ones in the end. Besides, there are some cases when your
+   business logic doesn't require any database access or refers to multiple tables. In these cases, it's ambiguous which
+   model should manage the logic.
 
 
 2. QuerySet/Managers <br>
@@ -44,6 +45,7 @@ their pros and cons. Let's check them one by one.
 ## How to use DRF-Service-Layer in View
 
 ### Steps
+
 1. Install package
    ```python
    pip install drf-service-layer
@@ -56,8 +58,8 @@ their pros and cons. Let's check them one by one.
    `dto property` in your view that inherits GenericServiceAPIView from DRF-Service-Layer. We'll cover this
    shortly. <br>
 
-   Let's implement DTO. There are several container types you can choose. If you want to validate your DTO before transfer,
-   you can use 3rd party library like [Pydantic](https://pydantic-docs.helpmanual.io/).
+   Let's implement DTO. There are several container types you can choose. If you want to validate your DTO before
+   transfer, you can use 3rd party library like [Pydantic](https://pydantic-docs.helpmanual.io/).
 
     - DTO as dataclass
       ```python
@@ -147,10 +149,10 @@ their pros and cons. Let's check them one by one.
 
 ### Description
 
-When a view is initialized by DRF's `initial()` method, `dto property` is used as an argument when instantiating 
-the service layer. DTO is already injected into the service layer as an instance variable(`self.dto`), so you don't 
-need to care about parameters when implementing business logic and using them. You can get editor support from type 
-hinting(`self.dto: OrderDTO`) when you deal with `self.dto`. After all, you can call any method from the service layer 
+When a view is initialized by DRF's `initial()` method, `dto property` is used as an argument when instantiating the
+service layer. DTO is already injected into the service layer as an instance variable(`self.dto`), so you don't need to
+care about parameters when implementing business logic and using them. You can get editor support from type
+hinting(`self.dto: OrderDTO`) when you deal with `self.dto`. After all, you can call any method from the service layer
 using `self.service` in your views.
 
 <br>
@@ -172,8 +174,8 @@ class FooSerializer(serializers.ModelSerializer):
 
 ### Description
 
-If you add `@service_layer()` decorator to your serializer, you can access the service layer through `self.serivce`.
-The decorator explicitly notifies you that the serializer is connected to the service layer.
+If you add `@service_layer()` decorator to your serializer, you can access the service layer through `self.serivce`. The
+decorator explicitly notifies you that the serializer is connected to the service layer.
 
 ## Inspired by
 
