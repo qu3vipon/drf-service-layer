@@ -106,10 +106,9 @@ their pros and cons. Let's check them one by one.
    
    
    class OrderService(Service):
+       dto: OrderDTO
    
        def any_business_method(self):
-           self.dto: OrderDTO
-   
            user_id = self.dto.user_id
            order_id = self.dto.order_id
            sort = self.dto.sort
