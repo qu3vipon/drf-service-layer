@@ -1,6 +1,6 @@
 # DRF-Service-Layer
 
-Simple package which supports service-layered design for Django REST Framework.
+Simple package which supports service-layered architecture for Django REST Framework.
 
 <br>
 
