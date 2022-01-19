@@ -26,6 +26,11 @@ urlpatterns = [
         name="product_retrieve_original",
     ),
     path(
+        "service/products/",
+        views.ProductListView.as_view(),
+        name="product_list_service",
+    ),
+    path(
         "service/products/<int:pk>/",
         views.ProductRetrieveView.as_view(),
         name="product_retrieve_service",

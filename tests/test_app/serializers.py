@@ -13,7 +13,7 @@ class ProductSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
-        representation["price"] = self.service.adjust_price()
+        representation["price"] = self.service.adjust_price(instance)
         return representation
 
 

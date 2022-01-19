@@ -3,11 +3,11 @@ from dataclasses import dataclass
 from rest_framework.exceptions import ValidationError
 
 from drf_service_layer.services import Service
+from tests.test_app.models import Product
 
 
 @dataclass
 class PriceDTO:
-    price: float
     currency: str
 
 
@@ -18,7 +18,7 @@ class ProductService(Service):
             raise ValidationError("This currency is not supported.")
         return currency_param
 
-    def adjust_price(self) -> float:
+    def adjust_price(self, instance: Product) -> float:
         self.dto: PriceDTO
 
         exchange_rate = {
@@ -26,4 +26,4 @@ class ProductService(Service):
             "EUR": 0.85,
         }
 
-        return self.dto.price * exchange_rate[self.dto.currency]
+        return instance.price * exchange_rate[self.dto.currency]

@@ -18,10 +18,22 @@ class ProductRetrieveView(views.RetrieveAPIView):
         currency_param = self.request.query_params.get("currency", "WON")
         currency = self.pre_service.filter_currency_param(currency_param)
 
-        obj = self.get_object()
+        return PriceDTO(
+            currency=currency,
+        )
+
+
+class ProductListView(views.ListAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    service_class = ProductService
+
+    @property
+    def dto(self):
+        currency_param = self.request.query_params.get("currency", "WON")
+        currency = self.pre_service.filter_currency_param(currency_param)
 
         return PriceDTO(
-            price=obj.price,
             currency=currency,
         )
 

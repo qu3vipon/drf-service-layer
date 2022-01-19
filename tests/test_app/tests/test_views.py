@@ -36,6 +36,35 @@ class TestServiceAPIView:
         assert response.status_code == 200
         assert schema.is_valid(response.json())
 
+    @pytest.mark.parametrize(
+        "currency, adjusted_price",
+        [
+            ("WON", 15.5 * 1200),
+            ("EUR", 15.5 * 0.85),
+        ],
+    )
+    def test_product_list(self, currency, adjusted_price):
+        client = APIClient()
+        url = resolve_url("product_list_service")
+
+        query_param = {"currency": currency}
+        response = client.get(url, query_param)
+
+        schema = Schema(
+            [
+                {
+                    "id": int,
+                    "name": str,
+                    "price": adjusted_price,  # return 1 instance
+                    "category": And(str, lambda s: len(s) == 1),
+                    "description": str,
+                }
+            ]
+        )
+
+        assert response.status_code == 200
+        assert schema.is_valid(response.json())
+
 
 # Original way of implementation
 
