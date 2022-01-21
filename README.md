@@ -13,7 +13,7 @@ their pros and cons. Let's check them one by one.
    This is one of the most popular ways to split business logic from views. To keep your views light, all the heavy
    codes go into "fat" models. The problem is that, as your project gets bigger, models become fatter and have too many
    responsibilities. They become "god" models over "fat" ones in the end. Besides, there are some cases when your
-   business logic doesn't require any database access or refers to multiple tables. In these cases, it's ambiguous which
+   business logic doesn't require any database access or they refers to multiple tables. In these cases, it's ambiguous which
    model should manage the logic.
 
 
