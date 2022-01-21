@@ -168,7 +168,7 @@ class FooSerializer(serializers.ModelSerializer):
 
     def foo(self, obj):
         # ...
-        return self.service.any_business_function()
+        return self.service.any_business_method()
 ```
 
 ### Description
