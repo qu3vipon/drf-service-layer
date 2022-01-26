@@ -156,7 +156,7 @@ using `self.service` in your views.
 
 <br>
 
-## How to use DRF-Service-Layer in Serializer
+## (WIP)How to use DRF-Service-Layer in Serializer
 
 ```python
 from drf_service_layer.services import service_layer
