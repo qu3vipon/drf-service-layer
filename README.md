@@ -148,7 +148,7 @@ their pros and cons. Let's check them one by one.
 
 ### Description
 
-When a view is initialized by DRF's `initial()` method, `dto property` is used as an argument when instantiating the
+When a view is initialized by DRF's `initial()` method, `dto property` is used as an argument for instantiating the
 service layer. DTO is already injected into the service layer as an instance variable(`self.dto`), so you don't need to
 care about parameters when implementing business logic and using them. You can get editor support from type
 hinting(`self.dto: OrderDTO`) when you deal with `self.dto`. After all, you can call any method from the service layer
