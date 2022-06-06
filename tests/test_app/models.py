@@ -9,10 +9,11 @@ class User(AbstractUser):
 CATEGORY_CHOICES = (("C", "Clothes"), ("F", "Food"), ("B", "Beverage"))
 
 ORDER_STATUS_CHOICES = (
-    ("P", "Pending"),
-    ("R", "Ready for delivery"),
-    ("S", "Shipped"),
-    ("R", "Received"),
+    (-1, "Canceled"),
+    (0, "Pending"),
+    (1, "Ready for delivery"),
+    (2, "Shipped"),
+    (3, "Received"),
 )
 
 
@@ -26,10 +27,9 @@ class Product(models.Model):
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     ordered_at = models.DateTimeField(auto_now_add=True)
-    canceled_at = models.DateTimeField()
-    is_paid = models.BooleanField(default=False)
-    is_canceled = models.BooleanField(default=False)
-    status = models.CharField(choices=CATEGORY_CHOICES, max_length=1)
+    paid_at = models.DateTimeField(null=True)
+    canceled_at = models.DateTimeField(null=True)
+    status = models.SmallIntegerField(choices=CATEGORY_CHOICES)
 
 
 class OrderDetail(models.Model):
